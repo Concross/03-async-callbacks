@@ -1,0 +1,23 @@
+{
+  "name": "03-async-callbacks",
+  "version": "1.0.0",
+  "description": "Lab 3 Async Callbacks with a file reader",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest **/*.test.js",
+    "lint": "eslint **/.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Concross/03-async-callbacks.git"
+  },
+  "author": "Connor Crossley <cacrossley22@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Concross/03-async-callbacks/issues"
+  },
+  "homepage": "https://github.com/Concross/03-async-callbacks#readme",
+  "dependencies": {
+    "jest": "^23.5.0"
+  }
+}
