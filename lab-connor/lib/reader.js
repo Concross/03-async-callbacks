@@ -1,9 +1,26 @@
 'use strict';
 
+const fs = require('fs');
+
 module.exports = exports = function (paths, callback) {
   _checkNumberOfArgs(arguments, exports);
   _checkValidFirstArg(paths);
 
+  let fileContents = paths.map(file => {
+
+    fs.readFile(file, (err, data) => {
+      if (err) {
+        callback(err);
+
+      } else {
+        callback(null, data.toString());
+
+      }
+
+    });
+  });
+
+  console.log(fileContents);
 };
 
 const _checkNumberOfArgs = (actual, expected) => {
@@ -13,10 +30,7 @@ const _checkNumberOfArgs = (actual, expected) => {
 };
 
 const _checkValidFirstArg = (paths) => {
-  // check if paths is an array
   _isPathsArrayValid(paths);
-  // check if paths has enough elements
-  // check if each element in the path is a proper file path
 
 };
 

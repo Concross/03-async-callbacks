@@ -1,6 +1,12 @@
 'use strict';
 
+jest.mock('fs');
+
 const reader = require('../lib/reader');
+
+const file1 = `${__dirname}/../data/file1.txt`, file2 = `${__dirname}/../data/file2.txt`, file3 = `${__dirname}/../data/file3.txt`;
+
+const badFile = `${__dirname}/../data/bad.txt`;
 
 describe('Testing reader(paths, callback) for valid arguments', () => {
   test('reader() should throw an Error when called without enough args', () => {
@@ -52,6 +58,26 @@ describe('Testing reader(paths, callback) for valid arguments', () => {
       reader([1, 2, 3, 4], cb);
     }).toThrowError(typeErrorMessage);
 
+  });
+
+  test('reader() should throw an error if any file path is bad', () => {
+
+    let paths = [badFile, file2, file3];
+
+    reader(paths, (err, result) => {
+      expect(err).toBeDefined();
+    });
+
+  });
+
+  test('reader() should return the result if file paths are good', () => {
+
+    let paths = [file1, file2, file3];
+
+    reader(paths, (err, result) => {
+      expect(err).toBeDefined();
+      expect(typeof result).toBe('string');
+    });
   });
 
 });
