@@ -80,4 +80,14 @@ describe('Testing reader(paths, callback) for valid arguments', () => {
     });
   });
 
+  test('reader() should throw an error if second arg is not a function', () => {
+    let errorMessage = 'Type Error: Second argument must be a callback function';
+    let paths = [file1, file2, file3];
+
+    expect(() => {
+      reader(paths, []);
+    }).toThrowError(errorMessage);
+
+  });
+
 });

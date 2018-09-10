@@ -5,9 +5,9 @@ const fs = require('fs');
 module.exports = exports = function (paths, callback) {
   _checkNumberOfArgs(arguments, exports);
   _checkValidFirstArg(paths);
+  _checkValidSecondArg(callback);
 
-  let fileContents = _readFiles(paths, callback);
-  console.log(fileContents);
+  _readFiles(paths, 0, callback);
 };
 
 const _checkNumberOfArgs = (actual, expected) => {
@@ -39,16 +39,23 @@ const _isPathsLengthValid = (paths) => {
   }
 };
 
-const _readFiles = (paths, callback) => {
-  let files = paths.map(file =>
-    fs.readFile(file, (err, data) => {
-      if (err) {
-        callback(err);
-      } else {
-        console.log(data.toString());
-        return data.toString();
-      }
-    }));
+const _checkValidSecondArg = (callback) => {
+  if (typeof callback !== 'function') {
+    throw new TypeError('Type Error: Second argument must be a callback function');
+  }
+};
 
-  return files;
+const _readFiles = (paths, idx, callback) => {
+  if (idx >= paths.length) {
+    return;
+  }
+  const currFile = paths[idx];
+  return fs.readFile(currFile, (err, data) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, data.toString());
+      _readFiles(paths, idx + 1, callback);
+    }
+  });
 };
