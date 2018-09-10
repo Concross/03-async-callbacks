@@ -9,7 +9,7 @@ let resolveFiles = (err, data) => {
   if (err) {
     throw err;
   } else {
-    console.log(data.toString());
+    return data;
   }
 };
 

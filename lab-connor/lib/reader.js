@@ -6,20 +6,7 @@ module.exports = exports = function (paths, callback) {
   _checkNumberOfArgs(arguments, exports);
   _checkValidFirstArg(paths);
 
-  let fileContents = paths.map(file => {
-
-    fs.readFile(file, (err, data) => {
-      if (err) {
-        callback(err);
-
-      } else {
-        callback(null, data.toString());
-
-      }
-
-    });
-  });
-
+  let fileContents = _readFiles(paths, callback);
   console.log(fileContents);
 };
 
@@ -50,4 +37,18 @@ const _isPathsLengthValid = (paths) => {
   if (!(paths.length === 3)) {
     throw new TypeError('Type Error: reader() paths parameter must be an array of exactly three file paths');
   }
+};
+
+const _readFiles = (paths, callback) => {
+  let files = paths.map(file =>
+    fs.readFile(file, (err, data) => {
+      if (err) {
+        callback(err);
+      } else {
+        console.log(data.toString());
+        return data.toString();
+      }
+    }));
+
+  return files;
 };
